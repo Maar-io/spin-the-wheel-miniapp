@@ -1,7 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
+  --new-year: linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%);
+  --font-family-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-cinzel: 'Cinzel', serif;
+  
   background-color: #181818;
   color: rgba(255, 255, 255, 0.87);
-  color-scheme: light dark;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   font-weight: 400;
@@ -11,6 +20,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #1A1A2E 0%, #0F0F1E 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+#root {
+  width: 100%;
+  max-width: 424px;
+  margin: 0 auto;
+  min-height: 695px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gradient-text {
+  background: var(--new-year);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (prefers-color-scheme: light) {

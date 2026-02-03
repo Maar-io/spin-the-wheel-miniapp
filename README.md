@@ -2,6 +2,9 @@
 
 A Chinese Zodiac spinning wheel game for the Year of the Horse celebration. Built with React, TypeScript, and Vite.
 
+add image here
+
+![Wheel Miniapp Preview](./design/spin.png)
 ## Features
 
 - 🎡 Interactive spinning wheel with 12 Chinese Zodiac animals

@@ -3,7 +3,7 @@
  * Handles game logic and will later be connected to backend API
  */
 
-import { ZODIAC_ANIMALS, HORSE_INDEX } from '../types/types';
+import { HORSE_INDEX } from '../types/types';
 
 /**
  * Get the number of tickets available for the user

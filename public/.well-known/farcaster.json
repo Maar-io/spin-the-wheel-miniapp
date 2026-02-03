@@ -1,9 +1,4 @@
 {
-  "accountAssociation": {
-    "header": "",
-    "payload": "",
-    "signature": ""
-  },
   "miniapp": {
     "version": "1",
     "name": "Spin to Win",
@@ -14,6 +9,6 @@
     "splashImageUrl": "https://spin-the-wheel-miniapp.vercel.app/preview.png",
     "splashBackgroundColor": "#6200EA",
     "primaryCategory": "entertainment",
-    "tags": ["game", "lunar new year", "zodiac", "horse", "spin"]
+    "tags": ["game", "lunarnewyear", "horse", "spin"]
   }
 }

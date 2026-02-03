@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "biome check src",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:frame": "vite & sleep 2 && open -n -a 'Google Chrome' --args --window-size=424,695 --new-window http://localhost:5173"
   },
   "dependencies": {
     "@farcaster/miniapp-sdk": "latest",

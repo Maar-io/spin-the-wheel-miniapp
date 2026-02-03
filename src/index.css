@@ -4,11 +4,14 @@
   padding: 0;
 }
 
+/* Farcaster Mini App frame: 424×695px (from miniapps.farcaster.xyz) */
 :root {
   --new-year: linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%);
   --font-family-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-family-cinzel: 'Cinzel', serif;
-  
+  --frame-width: 424px;
+  --frame-height: 695px;
+
   background-color: #181818;
   color: rgba(255, 255, 255, 0.87);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -22,21 +25,33 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: var(--frame-width);
+  margin: 0 auto;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: linear-gradient(180deg, #1A1A2E 0%, #0F0F1E 100%);
-  min-height: 100vh;
+  min-height: var(--frame-height);
+  width: 100%;
+  max-width: var(--frame-width);
+  overflow-x: hidden;
   color: white;
 }
 
 #root {
   width: 100%;
-  max-width: 424px;
+  max-width: var(--frame-width);
   margin: 0 auto;
-  min-height: 695px;
+  min-height: var(--frame-height);
+  height: var(--frame-height);
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .gradient-text {

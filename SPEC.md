@@ -227,10 +227,10 @@ const { fid } = await sdk.auth.getCurrentUser()
 - [ ] Testing and QA
 
 ## Design Dimensions
-- **Target size**: 424×695px (mobile-optimized dimensions)
-- **Wheel diameter**: ~350px
+- **Target size**: 424×695px (Farcaster Mini App frame per [miniapps.farcaster.xyz](https://miniapps.farcaster.xyz) — web Mini App sizes should be set to 424×695px)
+- **Wheel diameter**: 358px (fits within 424px with padding)
 - **Animal icons**: 60×60px per segment
-- **Responsive**: Adapt to smaller screens
+- **No horizontal scroll**: Content constrained to max-width 424px; overflow-x hidden on html/body/#root
 
 ## Color Scheme
 - **Primary**: Red (#D32F2F) - Traditional Chinese color

@@ -57,7 +57,7 @@ export const Wheel: React.FC<{ rotation?: number }> = ({ rotation = 0 }) => {
   };
   
   return (
-    <div style={{ position: 'relative', width: '358px', height: '358px' }}>
+    <div style={{ position: 'relative', width: '358px', height: '358px', maxWidth: '100%' }}>
       {/* Golden border circle */}
       <svg 
         xmlns="http://www.w3.org/2000/svg" 

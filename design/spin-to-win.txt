@@ -215,6 +215,26 @@ border-radius: 32px;
 border: 1px solid #F6ECDA;
 background: #C22C2D;
 
+### Button text: Spin
+color: #FDDDA1;
+font-family: Cinzel;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 120% */
+
+### Button text when token=0
+### Button text: Spin
+display: flex;
+min-width: 80px;
+padding: 12px var(--padding-p-4, 16px);
+justify-content: center;
+align-items: center;
+gap: gap-1;
+align-self: stretch;
+
+
+
 ### Button, text content: Rules & details
 
 color: var(--blue-400, #60A5FA);

@@ -2,31 +2,33 @@ import { GradientTitle } from './GradientTitle';
 import { WheelPointer } from './WheelPointer';
 import { Wheel } from './Wheel';
 import { useState } from 'react';
+import { getNumberOfTickets, getWinningAnimal } from '../services/gameService';
+import { GAME_CONSTANTS, ZODIAC_ANIMALS } from '../types/types';
+import { calculateWheelRotation } from '../utils/wheelRotation';
 
 export const SpinToWin: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [tickets, setTickets] = useState(10);
+  const [tickets, setTickets] = useState(getNumberOfTickets());
+  const [targetAnimalIndex, setTargetAnimalIndex] = useState<number | null>(null);
 
   const handleSpin = () => {
     if (isSpinning || tickets === 0) return;
     
     setIsSpinning(true);
     
-    // Each animal is 30 degrees (360/12)
-    // Pick random animal (0-11)
-    const randomAnimal = Math.floor(Math.random() * 12);
-    const targetAngle = randomAnimal * 30;
+    // Get which animal to land on from the service
+    const targetAnimal = getWinningAnimal();
+    setTargetAnimalIndex(targetAnimal);
     
-    // Always spin 5 full rotations (1800 degrees) + target angle
-    // This ensures consistent speed every time
-    const newRotation = rotation + 1800 + targetAngle;
+    // Calculate the new rotation to land on the target animal
+    const newRotation = calculateWheelRotation(targetAnimal, rotation);
     setRotation(newRotation);
     
     setTimeout(() => {
       setIsSpinning(false);
       setTickets(prev => prev - 1);
-    }, 3000);
+    }, GAME_CONSTANTS.SPIN_DURATION_MS);
   };
 
   return (
@@ -166,6 +168,27 @@ export const SpinToWin: React.FC = () => {
             <path d="M4 12L12 4M12 4H6M12 4V10" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
+
+        {/* Testing: Show expected winning animal */}
+        {targetAnimalIndex !== null && (
+          <div style={{
+            marginTop: '16px',
+            padding: '8px 16px',
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px',
+            color: '#FFF',
+            fontFamily: 'Inter',
+            fontSize: '12px',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontWeight: 600, marginBottom: '4px' }}>
+              🧪 TEST MODE
+            </div>
+            <div>
+              Expected: {ZODIAC_ANIMALS[targetAnimalIndex]} (index: {targetAnimalIndex})
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ export const Wheel: React.FC<{ rotation?: number }> = ({ rotation = 0 }) => {
             />
             {/* Animal image centered in segment */}
             <image 
-              href={`/design/${animal}.png`} 
+              href={`/public/design/${animal}.png`} 
               x="150" 
               y="15" 
               width="50" 

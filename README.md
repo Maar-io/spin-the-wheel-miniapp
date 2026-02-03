@@ -44,6 +44,8 @@ pnpm preview
 
 ## Deploy to Vercel
 
+**Auto-deploy on push:** Connect the project to your Git repo in Vercel (**Settings** → **Git**). Then every `git push origin main` triggers a deploy (no need to run `vercel --prod`). See [DEPLOYMENT.md](./DEPLOYMENT.md#auto-deploy-on-push-same-as-inking).
+
 ### Option 1: Deploy via Vercel CLI
 
 ```bash

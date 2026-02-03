@@ -1,1 +1,14 @@
-{}
+{
+  "miniapp": {
+    "version": "1",
+    "name": "Spin to Win",
+    "iconUrl": "https://spin-the-wheel-miniapp.vercel.app/preview.png",
+    "homeUrl": "https://spin-the-wheel-miniapp.vercel.app",
+    "imageUrl": "https://spin-the-wheel-miniapp.vercel.app/preview.png",
+    "buttonTitle": "Spin",
+    "splashImageUrl": "https://spin-the-wheel-miniapp.vercel.app/preview.png",
+    "splashBackgroundColor": "#0A0B1D",
+    "primaryCategory": "entertainment",
+    "tags": ["game", "lunar new year", "zodiac", "horse", "spin"]
+  }
+}

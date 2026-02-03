@@ -1,3 +1,32 @@
+// Import animal images so Vite bundles them (fixes 404 on Vercel)
+import horseImg from '../assets/design/horse.png';
+import ratImg from '../assets/design/rat.png';
+import oxImg from '../assets/design/ox.png';
+import tigerImg from '../assets/design/tiger.png';
+import rabbitImg from '../assets/design/rabbit.png';
+import dragonImg from '../assets/design/dragon.png';
+import snakeImg from '../assets/design/snake.png';
+import goatImg from '../assets/design/goat.png';
+import monkeyImg from '../assets/design/monkey.png';
+import roosterImg from '../assets/design/rooster.png';
+import dogImg from '../assets/design/dog.png';
+import pigImg from '../assets/design/pig.png';
+
+const ANIMAL_IMAGES: Record<string, string> = {
+  horse: horseImg,
+  rat: ratImg,
+  ox: oxImg,
+  tiger: tigerImg,
+  rabbit: rabbitImg,
+  dragon: dragonImg,
+  snake: snakeImg,
+  goat: goatImg,
+  monkey: monkeyImg,
+  rooster: roosterImg,
+  dog: dogImg,
+  pig: pigImg,
+};
+
 export const Wheel: React.FC<{ rotation?: number }> = ({ rotation = 0 }) => {
   // 12 zodiac animals in order starting from 12 o'clock
   const animals = [
@@ -75,7 +104,7 @@ export const Wheel: React.FC<{ rotation?: number }> = ({ rotation = 0 }) => {
             />
             {/* Animal image centered in segment */}
             <image 
-              href={`/public/design/${animal}.png`} 
+              href={ANIMAL_IMAGES[animal]} 
               x="150" 
               y="15" 
               width="50" 

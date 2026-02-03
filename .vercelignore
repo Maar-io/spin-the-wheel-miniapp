@@ -1,0 +1,27 @@
+# Dependencies and build output (Vercel installs and builds)
+node_modules
+dist
+.vercel
+
+# Git history (large, not needed for deploy)
+.git
+
+# Local env and editor cruft
+.env
+.env.*
+!.env.example
+.cursor
+.idea
+.vscode
+.DS_Store
+
+# Docs and root design reference only (build uses src/assets/design)
+/design
+*.md
+!README.md
+SPEC.md
+DEPLOYMENT.md
+
+# Logs and temp
+*.log
+.turbo

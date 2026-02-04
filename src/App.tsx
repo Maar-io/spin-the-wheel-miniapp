@@ -1,6 +1,6 @@
 import { sdk } from "@farcaster/miniapp-sdk";
 import { useEffect } from "react";
-import { WinPage } from "./components/WinPage";
+import { SpinToWin } from "./components/SpinToWin";
 import "./index.css";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   }, []);
 
   // Temporary: Win page as landing for testing. Switch back to <SpinToWin /> for normal flow.
-  return <WinPage />;
+  return <SpinToWin />;
 }
 
 export default App;

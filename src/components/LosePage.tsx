@@ -1,7 +1,39 @@
 import type React from 'react';
-import horseWinImg from '../assets/design/horse-win.png';
-import fireworksImg from '../assets/design/fireworks.png';
 import { getNumberOfTickets } from '../services/gameService';
+import type { ZodiacAnimal } from '../types/types';
+
+// Animal images for lose state (same assets as wheel)
+import horseImg from '../assets/design/horse.png';
+import ratImg from '../assets/design/rat.png';
+import oxImg from '../assets/design/ox.png';
+import tigerImg from '../assets/design/tiger.png';
+import rabbitImg from '../assets/design/rabbit.png';
+import dragonImg from '../assets/design/dragon.png';
+import snakeImg from '../assets/design/snake.png';
+import goatImg from '../assets/design/goat.png';
+import monkeyImg from '../assets/design/monkey.png';
+import roosterImg from '../assets/design/rooster.png';
+import dogImg from '../assets/design/dog.png';
+import pigImg from '../assets/design/pig.png';
+
+const ANIMAL_IMAGES: Record<ZodiacAnimal, string> = {
+  horse: horseImg,
+  rat: ratImg,
+  ox: oxImg,
+  tiger: tigerImg,
+  rabbit: rabbitImg,
+  dragon: dragonImg,
+  snake: snakeImg,
+  goat: goatImg,
+  monkey: monkeyImg,
+  rooster: roosterImg,
+  dog: dogImg,
+  pig: pigImg,
+};
+
+function capitalizeAnimal(animal: ZodiacAnimal): string {
+  return animal.charAt(0).toUpperCase() + animal.slice(1);
+}
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
@@ -18,16 +50,6 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'relative',
     margin: '0 auto',
     minHeight: '100%',
-  },
-  fireworks: {
-    position: 'absolute',
-    right: -5,
-    top: 0,
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    aspectRatio: '137/77',
-    pointerEvents: 'none',
   },
   cardHeader: {
     display: 'flex',
@@ -65,14 +87,13 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 24,
     width: '100%',
   },
-  horseWinImage: {
-    width: 130,
-    height: 120,
-    aspectRatio: '13/12',
-    objectFit: 'cover',
+  animalImage: {
+    width: 242,
+    height: 259,
+    objectFit: 'contain',
   },
-  youWin: {
-    color: '#F43C3D',
+  notThisTime: {
+    color: '#FFFFFF',
     textAlign: 'center',
     fontFamily: 'var(--font-family-cinzel, Cinzel), serif',
     fontSize: 30,
@@ -80,8 +101,9 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     lineHeight: '125%',
     letterSpacing: '0.396px',
+    textTransform: 'uppercase',
   },
-  itsAHorse: {
+  youLandedOn: {
     color: '#A1A1AA',
     textAlign: 'center',
     fontFamily: 'var(--font-family-font-sans, Inter), sans-serif',
@@ -99,7 +121,7 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 4,
     borderRadius: '0.5rem',
     border: '1px solid rgba(193, 171, 124, 0.50)',
-    background: 'rgba(255, 188, 44, 0.10)',
+    background: 'rgba(255, 255, 255, 0.06)',
     alignSelf: 'center',
   },
   rewardRow: {
@@ -136,10 +158,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     lineHeight: '125%',
     letterSpacing: '0.07px',
-    background: 'linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%)',
-    backgroundClip: 'text',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    color: '#FFFFFF',
   },
   addedToAccount: {
     color: 'rgba(255,255,255,0.9)',
@@ -153,18 +172,21 @@ const styles: Record<string, React.CSSProperties> = {
   },
   spinAgainBtn: {
     display: 'flex',
-    padding: '0 4px',
-    alignItems: 'center',
+    width: 280,
+    minWidth: 80,
+    padding: '12px 16px',
     justifyContent: 'center',
-    gap: 0,
+    alignItems: 'center',
+    gap: 4,
+    borderRadius: 32,
+    border: '1px solid #F6ECDA',
+    background: '#C22C2D',
     color: '#FDDDA1',
     fontFamily: 'var(--font-family-cinzel, Cinzel), serif',
     fontSize: 20,
     fontStyle: 'normal',
     fontWeight: 600,
     lineHeight: '24px',
-    background: 'transparent',
-    border: 'none',
     cursor: 'pointer',
     alignSelf: 'center',
   },
@@ -193,24 +215,26 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
-export function WinPage() {
-  const ticketsRemaining = getNumberOfTickets(); // will be 10 in test; in real flow this would be post-spin count
+export interface LosePageProps {
+  /** The zodiac animal the user landed on (not the horse) */
+  animal: ZodiacAnimal;
+}
+
+export function LosePage({ animal }: LosePageProps) {
+  const ticketsRemaining = getNumberOfTickets();
+  const animalImageSrc = ANIMAL_IMAGES[animal];
+  const animalLabel = capitalizeAnimal(animal);
 
   const handleClose = () => {
-    // For testing landing: could navigate back to wheel or do nothing
     window.history.back();
   };
 
   const handleSpinAgain = () => {
-    window.location.reload(); // temporary: in app flow this would go back to SpinToWin
+    window.location.reload();
   };
 
   return (
     <div style={styles.page}>
-      <div style={styles.fireworks}>
-        <img src={fireworksImg} alt="" style={{ height: 'auto', maxWidth: '100%' }} />
-      </div>
-
       <div style={styles.cardHeader}>
         <button type="button" style={styles.closeBtn} onClick={handleClose} aria-label="Close">
           ×
@@ -219,9 +243,13 @@ export function WinPage() {
 
       <div style={styles.main}>
         <div style={styles.hero}>
-          <img src={horseWinImg} alt="Horse" style={styles.horseWinImage} />
-          <h2 style={styles.youWin}>You Win!</h2>
-          <p style={styles.itsAHorse}>It's a Horse</p>
+          <img
+            src={animalImageSrc}
+            alt={animalLabel}
+            style={styles.animalImage}
+          />
+          <h2 style={styles.notThisTime}>Not this time</h2>
+          <p style={styles.youLandedOn}>You landed on {animalLabel}</p>
         </div>
 
         <div style={styles.rewardCard}>
@@ -243,7 +271,7 @@ export function WinPage() {
                 </svg>
               </div>
             </div>
-            <span style={styles.starPoints}>+100 STAR Points</span>
+            <span style={styles.starPoints}>+1 STAR Points</span>
           </div>
           <p style={styles.addedToAccount}>Added to your account</p>
         </div>
@@ -253,6 +281,15 @@ export function WinPage() {
         </button>
 
         <div style={styles.footer}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+            <path
+              d="M10.8332 4.16797V5.83464M10.8332 14.168V15.8346M10.8332 9.16797V10.8346M1.6665 7.5013C2.32955 7.5013 2.96543 7.76469 3.43427 8.23354C3.90311 8.70238 4.1665 9.33826 4.1665 10.0013C4.1665 10.6643 3.90311 11.3002 3.43427 11.7691C2.96543 12.2379 2.32955 12.5013 1.6665 12.5013V14.168C1.6665 14.61 1.8421 15.0339 2.15466 15.3465C2.46722 15.659 2.89114 15.8346 3.33317 15.8346H16.6665C17.1085 15.8346 17.5325 15.659 17.845 15.3465C18.1576 15.0339 18.3332 14.61 18.3332 14.168V12.5013C17.6701 12.5013 17.0342 12.2379 16.5654 11.7691C16.0966 11.3002 15.8332 10.6643 15.8332 10.0013C15.8332 9.33826 16.0966 8.70238 16.5654 8.23354C17.0342 7.76469 17.6701 7.5013 18.3332 7.5013V5.83464C18.3332 5.39261 18.1576 4.96868 17.845 4.65612C17.5325 4.34356 17.1085 4.16797 16.6665 4.16797H3.33317C2.89114 4.16797 2.46722 4.34356 2.15466 4.65612C1.8421 4.96868 1.6665 5.39261 1.6665 5.83464V7.5013Z"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
           <span style={styles.ticketsNum}>{ticketsRemaining}</span>
           <span style={styles.ticketsLabel}>tickets remaining</span>
         </div>

@@ -1,0 +1,215 @@
+# When user wins (horse is selected) there will be new Dialog open
+display: flex;
+width: 390px;
+padding-bottom: var(--padding-p-12, 48px);
+flex-direction: column;
+align-items: flex-start;
+gap: gap-0;
+
+border-radius: rounded-2xl rounded-2xl rounded-none rounded-none;
+background: #1E2939;
+
+/* shadows/shadow-lg */
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+
+## fireworks.png image (transparent)
+
+## Frame
+display: flex;
+justify-content: flex-end;
+align-items: center;
+aspect-ratio: 137/77;
+
+position: absolute;
+right: -5px;
+
+## Card header 
+display: flex;
+width: 390px;
+padding: var(--padding-p-1, 4px);
+justify-content: space-between;
+align-items: flex-start;
+
+## close button on right (x)
+display: flex;
+padding: var(--padding-p-15, 6px);
+justify-content: center;
+align-items: center;
+gap: p-0;
+
+border-radius: rounded-full;
+
+## Frame
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: gap-6;
+align-self: stretch;
+
+### Frame 
+display: flex;
+padding: 0 var(--padding-p-6, 24px);
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+align-self: stretch;
+
+### horse-win.png image
+width: 130px;
+height: 120px;
+aspect-ratio: 13/12;
+
+background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+
+### Frame
+display: flex;
+flex-direction: column;
+align-items: center;
+
+#### Text: You Win!
+color: #F43C3D;
+text-align: center;
+font-family: Cinzel;
+font-size: 30px;
+font-style: normal;
+font-weight: 700;
+line-height: 125%; /* 37.5px */
+letter-spacing: 0.396px;
+
+#### Text: It's a Horse
+color: var(--zinc-400, #A1A1AA);
+text-align: center;
+
+/* text-base/leading-6/normal */
+font-family: var(--font-family-font-sans, Inter);
+font-size: text-base;
+font-style: normal;
+font-weight: var(--font-weight-font-normal, 400);
+line-height: leading-6; /* 150% */
+
+### Frame
+display: flex;
+width: 280px;
+padding: gap-4 gap-5;
+flex-direction: column;
+align-items: center;
+gap: gap-1;
+
+border-radius: rounded-lg;
+border: 1px solid rgba(193, 171, 124, 0.50);
+background: rgba(255, 188, 44, 0.10);
+
+#### Frame
+display: flex;
+align-items: center;
+gap: gap-2;
+
+
+##### Token
+width: 28px;
+height: 28px;
+aspect-ratio: 1/1;
+
+###### Token group
+width: 28px;
+height: 28px;
+
+####### Elipse 22
+width: 28px;
+height: 28px;
+border-radius: 28px;
+background: #B6912D;
+
+####### Elipse 23
+width: 23.1px;
+height: 23.1px;
+border-radius: 23.1px;
+background: #D7B146;
+
+###### Token Frame
+width: 18.173px;
+height: 18.192px;
+
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+  <path d="M11.749 15.5293L9.08691 18.1914L6.4248 15.5293L9.08691 12.8672L11.749 15.5293ZM6.42383 15.5186H2.65918V11.7539H6.42383V15.5186ZM15.5059 15.5186H11.7412V11.7539H15.5059V15.5186ZM5.32422 9.08691L2.66211 11.749L0 9.08691L2.66211 6.4248L5.32422 9.08691ZM18.1738 9.08691L15.5117 11.749L12.8486 9.08691L15.5117 6.4248L18.1738 9.08691ZM6.42383 6.41895H2.65918V2.6543H6.42383V6.41895ZM11.7412 2.6543H15.5059V6.41895H11.7412V2.66992L9.08691 5.32422L6.4248 2.66211L9.08691 0L11.7412 2.6543Z" fill="white"/>
+</svg>
+
+##### Text: +100 STAR Points
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: 125%; /* 30px */
+letter-spacing: 0.07px;
+
+background: var(--new-year, linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+background: var(--new-year, linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%));
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 125%;
+letter-spacing: 0.07px;
+
+#### Text: Added to your account
+color: var(--primary-foreground);
+text-align: center;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+letter-spacing: -0.15px;
+
+### Button: Spin Again
+display: flex;
+padding: var(--spacing-0, 0) var(--spacing-1, 4px);
+align-items: flex-start;
+gap: var(--spacing-0, 0);
+
+color: #FDDDA1;
+font-family: Cinzel;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 120% */
+
+### frame
+display: flex;
+align-items: center;
+gap: gap-2;
+
+#### frame
+display: flex;
+align-items: center;
+gap: 4px;
+
+color: var(--primary-foreground);
+
+##### text: var number of remaining tickets
+/* text-sm/leading-5/medium */
+font-family: var(--font-family-font-sans, Inter);
+font-size: text-sm;
+font-style: normal;
+font-weight: var(--font-weight-font-medium, 500);
+line-height: leading-5; /* 142.857% */
+
+##### text: tickets remaining
+
+color: var(--primary-foreground);
+
+/* text-sm/leading-5/normal */
+font-family: var(--font-family-font-sans, Inter);
+font-size: text-sm;
+font-style: normal;
+font-weight: var(--font-weight-font-normal, 400);
+line-height: leading-5; /* 142.857% */
+
+### card base footer

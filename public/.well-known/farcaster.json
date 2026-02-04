@@ -8,6 +8,7 @@
   "miniapp": {
     "version": "1",
     "name": "Spin to Win",
+    "description": "Spin the wheel for Lunar New Year and win STAR Points.",
     "iconUrl": "https://spin-the-wheel-miniapp.vercel.app/icon.svg",
     "homeUrl": "https://spin-the-wheel-miniapp.vercel.app",
     "imageUrl": "https://spin-the-wheel-miniapp.vercel.app/preview.png",

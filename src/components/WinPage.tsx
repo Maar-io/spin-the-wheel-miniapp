@@ -173,10 +173,9 @@ const styles: Record<string, React.CSSProperties> = {
   },
   footer: {
     display: 'flex',
-    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
     gap: 8,
+    justifyContent: 'center',
     paddingTop: 16,
   },
   ticketsNum: {
@@ -198,29 +197,21 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export interface WinPageProps {
-  /** When provided, "Spin Again" navigates back to the wheel instead of reloading */
-  onSpinAgain?: () => void;
-  /** When provided, close (X) navigates back to the wheel instead of history.back() */
   onClose?: () => void;
+  onSpinAgain?: () => void;
 }
 
-export function WinPage({ onSpinAgain, onClose }: WinPageProps) {
+export function WinPage({ onClose, onSpinAgain }: WinPageProps = {}) {
   const ticketsRemaining = getNumberOfTickets();
 
   const handleClose = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      window.history.back();
-    }
+    if (onClose) onClose();
+    else window.history.back();
   };
 
   const handleSpinAgain = () => {
-    if (onSpinAgain) {
-      onSpinAgain();
-    } else {
-      window.location.reload();
-    }
+    if (onSpinAgain) onSpinAgain();
+    else window.location.reload();
   };
 
   return (

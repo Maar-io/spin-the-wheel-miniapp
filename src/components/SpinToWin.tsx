@@ -1,26 +1,27 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GradientTitle } from './GradientTitle';
 import { WheelPointer } from './WheelPointer';
 import { Wheel } from './Wheel';
 import { getNumberOfTickets, getWinningAnimal, useTicket } from '../services/gameService';
 import { GAME_CONSTANTS, HORSE_INDEX, ZODIAC_ANIMALS } from '../types/types';
-import type { ZodiacAnimal } from '../types/types';
 import { calculateWheelRotation, getRotationForAnimalAtTop } from '../utils/wheelRotation';
 
 export interface SpinToWinProps {
-  /** Called when the wheel stops with the result (win = horse at 12 o'clock, lose = other animal) */
-  onSpinResult?: (result: 'win' | 'lose', animal?: ZodiacAnimal, landedAnimalIndex?: number) => void;
-  /** When returning from Win/Lose, the animal index that last landed at 12 o'clock (wheel shows this at top) */
-  initialLandedAnimalIndex?: number | null;
+  onSpinResult?: (win: boolean, landedAnimalIndex: number) => void;
+  initialLandedAnimalIndex?: number;
 }
 
 export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLandedAnimalIndex }) => {
   const [rotation, setRotation] = useState(() =>
-    initialLandedAnimalIndex != null ? getRotationForAnimalAtTop(initialLandedAnimalIndex) : 0
+    initialLandedAnimalIndex !== undefined ? getRotationForAnimalAtTop(initialLandedAnimalIndex) : 0
   );
   const [isSpinning, setIsSpinning] = useState(false);
   const [tickets, setTickets] = useState(getNumberOfTickets());
+
+  useEffect(() => {
+    setTickets(getNumberOfTickets());
+  }, []);
 
   const handleSpin = () => {
     if (isSpinning || tickets === 0) return;
@@ -35,11 +36,11 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
     setRotation(newRotation);
 
     setTimeout(() => {
+      useTicket();
+      setTickets(getNumberOfTickets());
       setIsSpinning(false);
-      const remaining = useTicket();
-      setTickets(remaining);
       const isWin = targetAnimal === HORSE_INDEX;
-      onSpinResult?.(isWin ? 'win' : 'lose', isWin ? undefined : (resultAnimal as ZodiacAnimal), targetAnimal);
+      onSpinResult?.(isWin, targetAnimal);
     }, GAME_CONSTANTS.SPIN_DURATION_MS);
   };
 
@@ -48,43 +49,16 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       width: '100%',
       maxWidth: 390,
-      minHeight: 695,
-      padding: '24px 20px 32px',
+      height: '100%',
+      minHeight: 0,
+      padding: '12px 20px 16px',
       gap: 0,
       margin: '0 auto',
       background: 'linear-gradient(180deg, #1A1A2E 0%, #0F0F1E 100%)',
-    },
-    header: {
-      display: 'flex',
-      width: '100%',
-      maxWidth: 390,
-      padding: '8px 0 16px',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flexShrink: 0,
-    },
-    headerTitle: {
-      color: '#FFFFFF',
-      fontFamily: 'var(--font-family-cinzel, Cinzel), serif',
-      fontSize: 18,
-      fontWeight: 600,
-      lineHeight: '120%',
-    },
-    headerBtn: {
-      display: 'flex',
-      padding: 8,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: '50%',
-      border: 'none',
-      background: 'transparent',
-      color: 'rgba(255,255,255,0.9)',
-      cursor: 'pointer',
-      fontSize: 20,
-      lineHeight: 1,
+      overflow: 'hidden',
     },
     eventDateRow: {
       display: 'flex',
@@ -93,7 +67,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       justifyContent: 'flex-end',
       alignItems: 'center',
       gap: 6,
-      marginBottom: 8,
+      marginBottom: 4,
     },
     eventDate: {
       display: 'flex',
@@ -113,7 +87,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       flexDirection: 'column',
       alignItems: 'center',
       gap: 4,
-      marginBottom: 4,
+      marginBottom: 2,
     },
     rewardText: {
       color: '#FFF',
@@ -123,7 +97,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       fontWeight: 600,
       lineHeight: '18px',
       letterSpacing: '-0.15px',
-      marginBottom: 12,
+      marginBottom: 4,
     },
     ticketPill: {
       display: 'flex',
@@ -134,7 +108,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       border: '1px solid #E9D8BA',
       background: 'linear-gradient(94deg, rgba(230, 182, 92, 0.73) 1.4%, #F7ECD8 49.58%, #E6B65C 97.76%)',
       boxShadow: 'inset 1px 1px 4px 0 rgba(0, 0, 0, 0.25)',
-      marginBottom: 8,
+      marginBottom: 4,
     },
     ticketPillText: {
       color: '#0A0B1D',
@@ -156,7 +130,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       alignItems: 'center',
       gap: 0,
       flexShrink: 0,
-      marginBottom: 8,
+      marginBottom: 4,
     },
     pointerWrap: {
       marginBottom: -20,
@@ -170,7 +144,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       fontWeight: 400,
       lineHeight: '18px',
       letterSpacing: '-0.15px',
-      marginBottom: 12,
+      marginBottom: 4,
     },
     spinBtn: {
       display: 'flex',
@@ -189,7 +163,7 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
       fontWeight: 600,
       lineHeight: '24px',
       cursor: 'pointer',
-      marginBottom: 8,
+      marginBottom: 4,
     },
     spinBtnDisabled: {
       background: '#666',
@@ -215,19 +189,6 @@ export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLande
 
   return (
     <div style={styles.page}>
-      {/* Header: X | Spin to Win | Share */}
-      <header style={styles.header}>
-        <button type="button" style={styles.headerBtn} aria-label="Close">
-          ×
-        </button>
-        <span style={styles.headerTitle}>Spin to Win</span>
-        <button type="button" style={styles.headerBtn} aria-label="Share">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 16V12M4 12L10 6M4 12H8M16 4V8M16 8L10 14M16 8H12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </header>
-
       {/* Event date: own row, aligned top right */}
       <div style={styles.eventDateRow}>
         <div style={styles.eventDate}>

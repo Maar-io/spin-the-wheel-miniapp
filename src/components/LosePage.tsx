@@ -1,9 +1,6 @@
 import type React from 'react';
 import { getNumberOfTickets } from '../services/gameService';
 import type { ZodiacAnimal } from '../types/types';
-
-// Animal images for lose state (same assets as wheel)
-import horseImg from '../assets/design/horse.png';
 import ratImg from '../assets/design/rat.png';
 import oxImg from '../assets/design/ox.png';
 import tigerImg from '../assets/design/tiger.png';
@@ -17,7 +14,7 @@ import dogImg from '../assets/design/dog.png';
 import pigImg from '../assets/design/pig.png';
 
 const ANIMAL_IMAGES: Record<ZodiacAnimal, string> = {
-  horse: horseImg,
+  horse: '', // lose page never shows horse (win)
   rat: ratImg,
   ox: oxImg,
   tiger: tigerImg,
@@ -30,10 +27,6 @@ const ANIMAL_IMAGES: Record<ZodiacAnimal, string> = {
   dog: dogImg,
   pig: pigImg,
 };
-
-function capitalizeAnimal(animal: ZodiacAnimal): string {
-  return animal.charAt(0).toUpperCase() + animal.slice(1);
-}
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
@@ -55,7 +48,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     width: '100%',
     padding: 4,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'flex-start',
   },
   closeBtn: {
@@ -70,12 +63,11 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     fontSize: 20,
     lineHeight: 1,
-    marginLeft: 'auto',
   },
   main: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: 24,
     width: '100%',
     padding: '0 24px',
@@ -84,33 +76,22 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: 24,
+    gap: 16,
     width: '100%',
   },
   animalImage: {
-    width: 242,
-    height: 259,
+    width: 120,
+    height: 120,
     objectFit: 'contain',
   },
   notThisTime: {
-    color: '#FFFFFF',
+    color: 'rgba(255,255,255,0.9)',
     textAlign: 'center',
     fontFamily: 'var(--font-family-cinzel, Cinzel), serif',
-    fontSize: 30,
-    fontStyle: 'normal',
+    fontSize: 24,
     fontWeight: 700,
     lineHeight: '125%',
-    letterSpacing: '0.396px',
     textTransform: 'uppercase',
-  },
-  youLandedOn: {
-    color: '#A1A1AA',
-    textAlign: 'center',
-    fontFamily: 'var(--font-family-font-sans, Inter), sans-serif',
-    fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '150%',
   },
   rewardCard: {
     display: 'flex',
@@ -121,54 +102,16 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 4,
     borderRadius: '0.5rem',
     border: '1px solid rgba(193, 171, 124, 0.50)',
-    background: 'rgba(255, 255, 255, 0.06)',
-    alignSelf: 'center',
-  },
-  rewardRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
-  },
-  tokenOuter: {
-    width: 28,
-    height: 28,
-    borderRadius: 28,
-    background: '#B6912D',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tokenInner: {
-    width: 23,
-    height: 23,
-    borderRadius: '50%',
-    background: '#D7B146',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tokenSvg: {
-    width: 18,
-    height: 18,
+    background: 'rgba(255, 188, 44, 0.10)',
   },
   starPoints: {
     fontFamily: 'Inter, sans-serif',
-    fontSize: 20,
-    fontStyle: 'normal',
+    fontSize: 18,
     fontWeight: 600,
-    lineHeight: '125%',
-    letterSpacing: '0.07px',
-    color: '#FFFFFF',
-  },
-  addedToAccount: {
-    color: 'rgba(255,255,255,0.9)',
-    textAlign: 'center',
-    fontFamily: 'Inter, sans-serif',
-    fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '20px',
-    letterSpacing: '-0.15px',
+    background: 'linear-gradient(90deg, #F7ECD8 0%, #E6B65C 50%, #F7ECD8 100%)',
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
   },
   spinAgainBtn: {
     display: 'flex',
@@ -177,73 +120,55 @@ const styles: Record<string, React.CSSProperties> = {
     padding: '12px 16px',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 4,
     borderRadius: 32,
     border: '1px solid #F6ECDA',
     background: '#C22C2D',
     color: '#FDDDA1',
     fontFamily: 'var(--font-family-cinzel, Cinzel), serif',
     fontSize: 20,
-    fontStyle: 'normal',
     fontWeight: 600,
     lineHeight: '24px',
     cursor: 'pointer',
-    alignSelf: 'center',
   },
   footer: {
     display: 'flex',
-    width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
     gap: 8,
-    paddingTop: 16,
+    justifyContent: 'center',
+    paddingTop: 8,
   },
   ticketsNum: {
     fontFamily: 'Inter, sans-serif',
     fontSize: 14,
-    fontStyle: 'normal',
     fontWeight: 500,
-    lineHeight: '20px',
     color: 'rgba(255,255,255,0.9)',
   },
   ticketsLabel: {
     fontFamily: 'Inter, sans-serif',
     fontSize: 14,
-    fontStyle: 'normal',
     fontWeight: 400,
-    lineHeight: '20px',
     color: 'rgba(255,255,255,0.8)',
   },
 };
 
 export interface LosePageProps {
-  /** The zodiac animal the user landed on (not the horse) */
   animal: ZodiacAnimal;
-  /** When provided, "Spin Again" navigates back to the wheel instead of reloading */
-  onSpinAgain?: () => void;
-  /** When provided, close (X) navigates back to the wheel instead of history.back() */
   onClose?: () => void;
+  onSpinAgain?: () => void;
 }
 
-export function LosePage({ animal, onSpinAgain, onClose }: LosePageProps) {
+export function LosePage({ animal, onClose, onSpinAgain }: LosePageProps) {
   const ticketsRemaining = getNumberOfTickets();
-  const animalImageSrc = ANIMAL_IMAGES[animal];
-  const animalLabel = capitalizeAnimal(animal);
+  const imgSrc = ANIMAL_IMAGES[animal] || snakeImg;
 
   const handleClose = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      window.history.back();
-    }
+    if (onClose) onClose();
+    else window.history.back();
   };
 
   const handleSpinAgain = () => {
-    if (onSpinAgain) {
-      onSpinAgain();
-    } else {
-      window.location.reload();
-    }
+    if (onSpinAgain) onSpinAgain();
+    else window.location.reload();
   };
 
   return (
@@ -256,37 +181,13 @@ export function LosePage({ animal, onSpinAgain, onClose }: LosePageProps) {
 
       <div style={styles.main}>
         <div style={styles.hero}>
-          <img
-            src={animalImageSrc}
-            alt={animalLabel}
-            style={styles.animalImage}
-          />
+          <img src={imgSrc} alt={animal} style={styles.animalImage} />
           <h2 style={styles.notThisTime}>Not this time</h2>
-          <p style={styles.youLandedOn}>You landed on {animalLabel}</p>
         </div>
 
         <div style={styles.rewardCard}>
-          <div style={styles.rewardRow}>
-            <div style={styles.tokenOuter}>
-              <div style={styles.tokenInner}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="19"
-                  height="19"
-                  viewBox="0 0 19 19"
-                  fill="none"
-                  style={styles.tokenSvg}
-                >
-                  <path
-                    d="M11.749 15.5293L9.08691 18.1914L6.4248 15.5293L9.08691 12.8672L11.749 15.5293ZM6.42383 15.5186H2.65918V11.7539H6.42383V15.5186ZM15.5059 15.5186H11.7412V11.7539H15.5059V15.5186ZM5.32422 9.08691L2.66211 11.749L0 9.08691L2.66211 6.4248L5.32422 9.08691ZM18.1738 9.08691L15.5117 11.749L12.8486 9.08691L15.5117 6.4248L18.1738 9.08691ZM6.42383 6.41895H2.65918V2.6543H6.42383V6.41895ZM11.7412 2.6543H15.5059V6.41895H11.7412V2.66992L9.08691 5.32422L6.4248 2.66211L9.08691 0L11.7412 2.6543Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
-            </div>
-            <span style={styles.starPoints}>+1 STAR Points</span>
-          </div>
-          <p style={styles.addedToAccount}>Added to your account</p>
+          <span style={styles.starPoints}>+1 STAR Points</span>
+          <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14 }}>Consolation reward</span>
         </div>
 
         <button type="button" style={styles.spinAgainBtn} onClick={handleSpinAgain}>

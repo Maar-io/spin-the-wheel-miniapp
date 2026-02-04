@@ -12,7 +12,7 @@
   --frame-width: 424px;
   --frame-height: 695px;
 
-  background-color: #181818;
+  /* No background on :root so it doesn’t propagate to full viewport */
   color: rgba(255, 255, 255, 0.87);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
@@ -25,33 +25,37 @@
   -webkit-text-size-adjust: 100%;
 }
 
+/* html fills viewport; its background is the “outside” so you can see frame/leaking */
 html {
-  overflow-x: hidden;
+  overflow: hidden;
   width: 100%;
-  max-width: var(--frame-width);
-  margin: 0 auto;
+  min-height: 100%;
+  background-color: #0d0d12;
+  margin: 0;
 }
 
+/* body is the 424×695 frame only; gradient stays inside this column */
 body {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  background: linear-gradient(180deg, #1A1A2E 0%, #0F0F1E 100%);
-  min-height: var(--frame-height);
-  width: 100%;
+  overflow: hidden;
+  width: var(--frame-width);
   max-width: var(--frame-width);
-  overflow-x: hidden;
+  height: var(--frame-height);
+  min-height: var(--frame-height);
+  background: linear-gradient(180deg, #1A1A2E 0%, #0F0F1E 100%);
   color: white;
 }
 
 #root {
-  width: 100%;
+  width: var(--frame-width);
   max-width: var(--frame-width);
-  margin: 0 auto;
-  min-height: var(--frame-height);
   height: var(--frame-height);
+  min-height: var(--frame-height);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .gradient-text {
@@ -63,7 +67,6 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    background-color: #f8f8f8;
     color: #181818;
   }
 }

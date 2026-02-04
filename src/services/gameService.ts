@@ -3,15 +3,28 @@
  * Handles game logic and will later be connected to backend API
  */
 
-import { HORSE_INDEX } from '../types/types';
+import { GAME_CONSTANTS, HORSE_INDEX } from '../types/types';
+
+// In-memory ticket count (source of truth). Replace with backend when available.
+let ticketCount = GAME_CONSTANTS.INITIAL_TICKETS;
 
 /**
  * Get the number of tickets available for the user
- * @returns Number of tickets (hardcoded to 10 for now)
+ * @returns Current ticket count from game state
  */
 export const getNumberOfTickets = (): number => {
-  // TODO: Replace with actual API call to backend
-  return 10;
+  return ticketCount;
+};
+
+/**
+ * Use one ticket (e.g. after a spin). Decrements the count in the service.
+ * @returns The new ticket count after decrement (minimum 0)
+ */
+export const useTicket = (): number => {
+  if (ticketCount > 0) {
+    ticketCount -= 1;
+  }
+  return ticketCount;
 };
 
 /**

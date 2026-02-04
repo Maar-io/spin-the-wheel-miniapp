@@ -69,3 +69,10 @@ export const calculateWheelRotation = (
   
   return newRotation;
 };
+
+/**
+ * Get the rotation (in degrees) that displays a given animal at the top (12 o'clock).
+ * Use this to show the wheel with the last result when returning from Win/Lose.
+ */
+export const getRotationForAnimalAtTop = (animalIndex: number): number =>
+  (360 - animalIndex * GAME_CONSTANTS.DEGREES_PER_ANIMAL) % 360;

@@ -192,9 +192,10 @@ const styles: Record<string, React.CSSProperties> = {
   },
   footer: {
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
-    gap: 8,
     justifyContent: 'center',
+    gap: 8,
     paddingTop: 16,
   },
   ticketsNum: {
@@ -218,19 +219,31 @@ const styles: Record<string, React.CSSProperties> = {
 export interface LosePageProps {
   /** The zodiac animal the user landed on (not the horse) */
   animal: ZodiacAnimal;
+  /** When provided, "Spin Again" navigates back to the wheel instead of reloading */
+  onSpinAgain?: () => void;
+  /** When provided, close (X) navigates back to the wheel instead of history.back() */
+  onClose?: () => void;
 }
 
-export function LosePage({ animal }: LosePageProps) {
+export function LosePage({ animal, onSpinAgain, onClose }: LosePageProps) {
   const ticketsRemaining = getNumberOfTickets();
   const animalImageSrc = ANIMAL_IMAGES[animal];
   const animalLabel = capitalizeAnimal(animal);
 
   const handleClose = () => {
-    window.history.back();
+    if (onClose) {
+      onClose();
+    } else {
+      window.history.back();
+    }
   };
 
   const handleSpinAgain = () => {
-    window.location.reload();
+    if (onSpinAgain) {
+      onSpinAgain();
+    } else {
+      window.location.reload();
+    }
   };
 
   return (

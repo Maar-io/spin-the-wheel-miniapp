@@ -3,12 +3,22 @@ import { useState } from 'react';
 import { GradientTitle } from './GradientTitle';
 import { WheelPointer } from './WheelPointer';
 import { Wheel } from './Wheel';
-import { getNumberOfTickets, getWinningAnimal } from '../services/gameService';
-import { GAME_CONSTANTS, ZODIAC_ANIMALS } from '../types/types';
-import { calculateWheelRotation } from '../utils/wheelRotation';
+import { getNumberOfTickets, getWinningAnimal, useTicket } from '../services/gameService';
+import { GAME_CONSTANTS, HORSE_INDEX, ZODIAC_ANIMALS } from '../types/types';
+import type { ZodiacAnimal } from '../types/types';
+import { calculateWheelRotation, getRotationForAnimalAtTop } from '../utils/wheelRotation';
 
-export const SpinToWin: React.FC = () => {
-  const [rotation, setRotation] = useState(0);
+export interface SpinToWinProps {
+  /** Called when the wheel stops with the result (win = horse at 12 o'clock, lose = other animal) */
+  onSpinResult?: (result: 'win' | 'lose', animal?: ZodiacAnimal, landedAnimalIndex?: number) => void;
+  /** When returning from Win/Lose, the animal index that last landed at 12 o'clock (wheel shows this at top) */
+  initialLandedAnimalIndex?: number | null;
+}
+
+export const SpinToWin: React.FC<SpinToWinProps> = ({ onSpinResult, initialLandedAnimalIndex }) => {
+  const [rotation, setRotation] = useState(() =>
+    initialLandedAnimalIndex != null ? getRotationForAnimalAtTop(initialLandedAnimalIndex) : 0
+  );
   const [isSpinning, setIsSpinning] = useState(false);
   const [tickets, setTickets] = useState(getNumberOfTickets());
 
@@ -26,7 +36,10 @@ export const SpinToWin: React.FC = () => {
 
     setTimeout(() => {
       setIsSpinning(false);
-      setTickets((prev) => prev - 1);
+      const remaining = useTicket();
+      setTickets(remaining);
+      const isWin = targetAnimal === HORSE_INDEX;
+      onSpinResult?.(isWin ? 'win' : 'lose', isWin ? undefined : (resultAnimal as ZodiacAnimal), targetAnimal);
     }, GAME_CONSTANTS.SPIN_DURATION_MS);
   };
 

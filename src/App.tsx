@@ -8,7 +8,6 @@ function App() {
     sdk.actions.ready();
   }, []);
 
-  // Temporary: Win page as landing for testing. Switch back to <SpinToWin /> for normal flow.
   return <SpinToWin />;
 }
 
